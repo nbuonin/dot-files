@@ -1,0 +1,15 @@
+# This is Git's per-user configuration file.
+[core]
+# Please adapt and uncomment the following lines:
+	user = Nick Buonincontri
+	email = nbuonin@gmail.com
+	editor = /usr/local/bin/vim
+	excludesfile = /Users/nick/.gitignore
+[user]
+	name = Nick Buonincontri
+	email = nbuonin@gmail.com
+[alias]
+	lg = log --oneline --decorate --graph --all
+	s = status -s
+[pull]
+	rebase = true
