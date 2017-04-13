@@ -83,3 +83,12 @@ highlight SignColumn ctermbg=black
 
 " Set leader to comma
 let mapleader = ","
+
+" no code folding on open
+set foldlevel=99
+
+" Pymode conf
+let g:pymode_rope_regenerate_on_write = 0
+
+" Turn off column ruler
+set colorcolumn=0
