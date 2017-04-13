@@ -28,6 +28,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
 Plugin 'vim-gitgutter'
+Plugin 'scrooloose/nerdcommenter'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -43,6 +44,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 filetype plugin indent on
+filetype plugin on
 
 " keys
 map <Space> :noh<cr>
@@ -77,3 +79,6 @@ autocmd FileType c,cpp,java,php,python autocmd BufWritePre <buffer> %s/\s\+$//e
 " Git Gutter conf
 let g:gitgutter_override_sign_column_highlight = 0
 highlight SignColumn ctermbg=black
+
+" Set leader to comma
+let mapleader = ","
