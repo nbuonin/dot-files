@@ -91,4 +91,16 @@ set foldlevel=99
 let g:pymode_rope_regenerate_on_write = 0
 
 " Turn off column ruler
-set colorcolumn=0
+let g:pymode_options_colorcolumn = 0
+
+" Better col ruler, only highlight the 79th char
+augroup collumnLimit
+  autocmd!
+  autocmd BufEnter,WinEnter,FileType scala,java,python,javascript
+        \ highlight ColumnLimit ctermbg=DarkGrey guibg=DarkGrey
+  let columnLimit = 79 " feel free to customize
+  let pattern =
+        \ '\%<' . (columnLimit+1) . 'v.\%>' . columnLimit . 'v'
+  autocmd BufEnter,WinEnter,FileType scala,java,python,javascript
+        \ let w:m1=matchadd('ColumnLimit', pattern, -1)
+augroup END
