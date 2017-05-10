@@ -89,6 +89,9 @@ set foldlevel=99
 
 " Pymode conf
 let g:pymode_rope_regenerate_on_write = 0
+   " Turns off auto documentation
+let g:pymode_doc = 0
+let g:pymode_doc_bind = 'D'
 
 " Turn off column ruler
 let g:pymode_options_colorcolumn = 0
