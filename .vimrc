@@ -75,7 +75,7 @@ set backspace=indent,eol,start
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 " Remove trailing whitespace in the specified file types
-autocmd FileType c,cpp,java,php,python autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd FileType c,cpp,java,php,python,javascript autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " Git Gutter conf
 let g:gitgutter_override_sign_column_highlight = 0
