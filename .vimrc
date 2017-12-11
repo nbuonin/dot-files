@@ -107,3 +107,6 @@ augroup collumnLimit
   autocmd BufEnter,WinEnter,FileType scala,java,python,javascript
         \ let w:m1=matchadd('ColumnLimit', pattern, -1)
 augroup END
+
+" Spell checking
+set spelllang=en

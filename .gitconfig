@@ -4,12 +4,17 @@
 	user = Nick Buonincontri
 	email = nbuonin@gmail.com
 	editor = /usr/local/bin/vim
-	excludesfile = /Users/nick/.gitignore
+	excludesfile = /Users/nickb/.gitignore_global
 [user]
 	name = Nick Buonincontri
 	email = nbuonin@gmail.com
 [alias]
 	lg = log --oneline --decorate --graph --all
 	s = status -s
+	d = difftool
 [pull]
 	rebase = true
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
