@@ -7,7 +7,7 @@ function parse_git_branch {
 export PS1="\u@\h:\w \$(parse_git_branch) \\$ "
 
 # Updates the dot-files directory
-git -C ~/dot-files pull origin master
+git -C ~/dot-files pull origin master > /dev/null 2>&1
 
 # Aliases
 alias ll="ls -lhA"
