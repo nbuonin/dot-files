@@ -15,6 +15,7 @@ alias ripit='cdparanoia -B && for i in *.wav; do ffmpeg -i "$i" "${i%.cdda.wav}"
 alias wav2flac='for i in *.wav; do ffmpeg -i "$i" "${i%.cdda.wav}".flac ; done'
 ## Git delete merged branches
 alias git-clean="git branch --merge | grep -v 'master' | xargs git branch -d"
+alias cpr="cp -r"
 
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
 # Homebrew, and follow rbenv instructions, per this SO: 
