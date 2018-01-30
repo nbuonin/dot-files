@@ -25,3 +25,4 @@ if [ $(rbenv > /dev/null 2>&1) ]; then eval "$(rbenv init -)"; fi
 
 # OPAM configuration
 . /Users/nickb/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+eval $(opam config env)
