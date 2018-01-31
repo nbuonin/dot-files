@@ -17,6 +17,10 @@ alias cpr="cp -r"
 alias rmr="rm -rf"
 ## see .gitconfig for alias
 alias gpo="git po"
+## spider site with wget to check for broken links
+function link-check {
+    wget --spider -r -nd -nv -H -l ${2-3} --waitretry ${3-2} -o run1.log $1 && echo "view run1.log to see output"
+}
 
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
 # Homebrew, and follow rbenv instructions, per this SO: 
