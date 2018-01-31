@@ -17,6 +17,11 @@ alias wav2flac='for i in *.wav; do ffmpeg -i "$i" "${i%.cdda.wav}".flac ; done'
 alias git-clean="git branch --merge | grep -v 'master' | xargs git branch -d"
 alias cpr="cp -r"
 alias rmr="rm -rf"
+## git push origin <current-branch>
+function parse_git_branch_clean { 
+   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/' 
+} 
+alias gpo="git push origin $(parse_git_branch_clean)"
 
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
 # Homebrew, and follow rbenv instructions, per this SO: 
