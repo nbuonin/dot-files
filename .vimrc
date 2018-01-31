@@ -113,3 +113,19 @@ set spelllang=en
 
 " oCaml tooling
 Plugin 'the-lambda-church/merlin'
+
+"Merlin: tooling for OCaml
+filetype plugin indent on
+syntax enable
+
+" Vim needs to be built with Python scripting support, and must be
+" able to find Merlin's executable on PATH.
+if executable('ocamlmerlin') && has('python')
+    let s:ocamlmerlin = substitute(system('opam config var share'), '\n$', '', '''') . "/ocamlmerlin"
+    execute "set rtp+=".s:ocamlmerlin."/vim"
+    execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
+endif
+" endof Merlin
+
+" ocp-indent
+autocmd FileType ocaml source substitute(system('opam config var share'), '\n$', '', '''') . "/typerex/ocp-indent/ocp-indent.vim"
