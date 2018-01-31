@@ -75,7 +75,7 @@ set backspace=indent,eol,start
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 " Remove trailing whitespace in the specified file types
-autocmd FileType c,cpp,java,php,python,javascript, autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd FileType c,cpp,java,php,python,javascript,ocaml autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " Git Gutter conf
 let g:gitgutter_override_sign_column_highlight = 0
@@ -128,4 +128,15 @@ endif
 " endof Merlin
 
 " ocp-indent
-autocmd FileType ocaml source substitute(system('opam config var share'), '\n$', '', '''') . "/typerex/ocp-indent/ocp-indent.vim"
+au BufEnter *.ml setf ocaml
+au BufEnter *.mli setf ocaml
+au FileType ocaml call FT_ocaml()
+function FT_ocaml()
+    set textwidth=80
+    set shiftwidth=2
+    set tabstop=2
+    " ocp-indent with ocp-indent-vim
+    autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
+    filetype indent on
+    filetype plugin indent on
+endfunction
