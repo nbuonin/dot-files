@@ -12,6 +12,10 @@
 	lg = log --oneline --decorate --graph --all
 	s = status -s
 	d = difftool
+    a = add .
+# deletes branches that have been merged
+    cb = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs git branch -d; }; f"
+    po = "!f() { git push origin `git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'`; }; f" 
 [pull]
 	rebase = true
 [diff]

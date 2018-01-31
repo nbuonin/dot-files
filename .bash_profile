@@ -13,15 +13,10 @@ git -C ~/dot-files pull origin master > /dev/null 2>&1
 alias ll="ls -lhA"
 alias ripit='cdparanoia -B && for i in *.wav; do ffmpeg -i "$i" "${i%.cdda.wav}".flac ; done'
 alias wav2flac='for i in *.wav; do ffmpeg -i "$i" "${i%.cdda.wav}".flac ; done'
-## Git delete merged branches
-alias git-clean="git branch --merge | grep -v 'master' | xargs git branch -d"
 alias cpr="cp -r"
 alias rmr="rm -rf"
-## git push origin <current-branch>
-function parse_git_branch_clean { 
-   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/' 
-} 
-alias gpo="git push origin $(parse_git_branch_clean)"
+## see .gitconfig for alias
+alias gpo="git po"
 
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
 # Homebrew, and follow rbenv instructions, per this SO: 
