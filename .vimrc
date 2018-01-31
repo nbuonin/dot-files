@@ -121,9 +121,12 @@ syntax enable
 " Vim needs to be built with Python scripting support, and must be
 " able to find Merlin's executable on PATH.
 if executable('ocamlmerlin') && has('python')
-    let s:ocamlmerlin = substitute(system('opam config var share'), '\n$', '', '''') . "/ocamlmerlin"
+    let s:ocamlmerlin = substitute(system('opam config var share'), '\n$', '', '''') . "/merlin"
     execute "set rtp+=".s:ocamlmerlin."/vim"
     execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
+    " remap type check for Merlin
+    map <buffer> .t :MerlinTypeOf<return>
+    let no_ocaml_maps=1
 endif
 " endof Merlin
 
