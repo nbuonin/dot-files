@@ -15,6 +15,8 @@ alias ripit='cdparanoia -B && for i in *.wav; do ffmpeg -i "$i" "${i%.cdda.wav}"
 alias wav2flac='for i in *.wav; do ffmpeg -i "$i" "${i%.cdda.wav}".flac ; done'
 alias cpr="cp -r"
 alias rmr="rm -rf"
+alias o="open"
+alias e="vim"
 ## see .gitconfig for alias
 alias gpo="git po"
 ## spider site with wget to check for broken links
