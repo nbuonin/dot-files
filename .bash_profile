@@ -17,6 +17,9 @@ alias cpr="cp -r"
 alias rmr="rm -rf"
 alias o="open"
 alias e="vim"
+alias eb="vim ~/dot-files/.bash_profile"
+alias eg="vim ~/dot-files/.gitconfig"
+alias sb="source ~/.bash_profile && echo 'Bash Profile Sourced'"
 ## see .gitconfig for alias
 alias gpo="git po"
 ## spider site with wget to check for broken links
