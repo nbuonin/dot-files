@@ -133,6 +133,7 @@ endif
 " ocp-indent
 au BufEnter *.ml setf ocaml
 au BufEnter *.mli setf ocaml
+au BufEnter *.mll setf ocaml
 au FileType ocaml call FT_ocaml()
 function FT_ocaml()
     set textwidth=80

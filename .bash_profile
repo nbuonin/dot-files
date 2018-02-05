@@ -19,6 +19,7 @@ alias o="open"
 alias e="vim"
 alias eb="vim ~/dot-files/.bash_profile"
 alias eg="vim ~/dot-files/.gitconfig"
+alias ev="vim ~/dot-files/.vimrc"
 alias sb="source ~/.bash_profile && echo 'Bash Profile Sourced'"
 ## see .gitconfig for alias
 alias gpo="git po"
