@@ -112,16 +112,13 @@ augroup END
 " Spell checking
 set spelllang=en
 
-" oCaml tooling
-Plugin 'the-lambda-church/merlin'
-
 "Merlin: tooling for OCaml
 filetype plugin indent on
 syntax enable
 
 " Vim needs to be built with Python scripting support, and must be
 " able to find Merlin's executable on PATH.
-if executable('ocamlmerlin') && has('python')
+if executable('ocamlmerlin') && has('python3')
     let s:ocamlmerlin = substitute(system('opam config var share'), '\n$', '', '''') . "/merlin"
     execute "set rtp+=".s:ocamlmerlin."/vim"
     execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
