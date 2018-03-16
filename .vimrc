@@ -88,6 +88,7 @@ let mapleader = ","
 set foldlevel=99
 
 " Pymode conf
+let g:pymode_python = 'python3'
 let g:pymode_rope_regenerate_on_write = 0
    " Turns off auto documentation
 let g:pymode_doc = 0
