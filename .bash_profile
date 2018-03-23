@@ -25,6 +25,8 @@ export PS1="\u@\h:\w \$(parse_git_branch) \\$ "
 # Updates the dot-files directory
 git -C ~/dot-files pull origin master > /dev/null 2>&1
 
+# Git autocompletion
+source ~/dot-files/git-completion.bash
 # Aliases
 alias l="ls"
 alias ll="ls -lhA"
