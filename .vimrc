@@ -30,6 +30,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-gitgutter'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'python-mode/python-mode'
+Plugin 'w0rp/ale'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -55,6 +56,7 @@ syn on se title
 color torte
 set ruler
 set number
+set laststatus=2
 
 " formatting
 set ai
