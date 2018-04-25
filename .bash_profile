@@ -40,6 +40,7 @@ alias eb="vim ~/dot-files/.bash_profile"
 alias eg="vim ~/dot-files/.gitconfig"
 alias ev="vim ~/dot-files/.vimrc"
 alias sb="source ~/.bash_profile && echo 'Bash Profile Sourced'"
+alias batt="pmset -g batt"
 ## see .gitconfig for alias
 alias gpo="git po"
 ## spider site with wget to check for broken links
@@ -60,6 +61,36 @@ function g {
     fi
 }
 alias cdg="cd $GUIDE_PATH"
+
+# Create directory and change into it
+function mdc {
+    mkdir $1 && cd $1
+}
+
+# Watcher Script
+function wit {
+    if [ ! $2 ];
+    then
+        echo "Usage: wit <file or dir to watch> '<cmd to execute>' opt: time to sleep"
+        return 0;
+    fi;
+    M_TIME=$(stat -f %c $1);
+    while true
+    do
+        TEMP_TIME=$(stat -f %c $1);
+        if [ "M_TIME" != "$TEMP_TIME" ];
+        then
+            exec $2
+            M_TIME=$TEMP_TIME;
+        fi;
+        if [ $3 ]
+        then
+            sleep $3;
+        else
+            sleep 2;
+        fi;
+    done;
+}
 
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
 # Homebrew, and follow rbenv instructions, per this SO: 

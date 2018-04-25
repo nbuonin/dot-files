@@ -31,6 +31,7 @@ Plugin 'vim-gitgutter'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'python-mode/python-mode'
 Plugin 'w0rp/ale'
+Plugin 'simnalamburt/vim-mundo'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -50,6 +51,10 @@ filetype plugin on
 
 " keys
 map <Space> :noh<cr>
+map j gj
+map k gk
+" Vim undo
+nnoremap <C-h> :MundoToggle<CR>
 
 " appearance
 syn on se title
@@ -57,6 +62,8 @@ color torte
 set ruler
 set number
 set laststatus=2
+set background=dark
+set t_Co=256
 
 " formatting
 set ai
@@ -68,6 +75,7 @@ set softtabstop=4
 
 " search
 set hls
+set incsearch
 
 " Fix the delete key
 fixdel
@@ -81,7 +89,11 @@ autocmd FileType c,cpp,java,php,python,javascript,ocaml autocmd BufWritePre <buf
 
 " Git Gutter conf
 let g:gitgutter_override_sign_column_highlight = 0
-highlight SignColumn ctermbg=black
+:autocmd BufNewFile,BufRead * highlight SignColumn ctermbg=black
+:autocmd BufNewFile,BufRead * highlight GitGutterAdd ctermfg=green
+:autocmd BufNewFile,BufRead * highlight GitGutterChange ctermfg=yellow
+:autocmd BufNewFile,BufRead * highlight GitGutterDelete ctermfg=red
+:autocmd BufNewFile,BufRead * highlight GitGutterChangeDelete ctermfg=red
 
 " Set leader to comma
 let mapleader = ","
@@ -125,7 +137,7 @@ if executable('ocamlmerlin') && has('python3')
     execute "set rtp+=".s:ocamlmerlin."/vim"
     execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
     " remap type check for Merlin
-    map <buffer> .t :MerlinTypeOf<return>
+    map <buffer> <C-t> :MerlinTypeOf<return>
     let no_ocaml_maps=1
 endif
 " endof Merlin
