@@ -132,6 +132,14 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<C-a>"
 
+" Delimitmate
+let g:delimitMate_expand_space = 1
+let g:delimitMate_expand_cr = 1
+
+" Ale config
+nmap <silent> <C-J> <Plug>(ale_next_wrap)
+nmap <silent> <C-K> <Plug>(ale_previous_wrap)
+
 " Turn off column ruler
 let g:pymode_options_colorcolumn = 0
 
