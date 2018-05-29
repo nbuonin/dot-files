@@ -30,6 +30,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-gitgutter'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
 Plugin 'python-mode/python-mode'
 Plugin 'w0rp/ale'
 Plugin 'simnalamburt/vim-mundo'
@@ -38,6 +39,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 " For better delimiters
 Plugin 'raimondi/delimitmate'
+Plugin 'pangloss/vim-javascript'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -93,6 +95,9 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " Remove trailing whitespace in the specified file types
 autocmd FileType c,cpp,java,php,python,javascript,ocaml autocmd BufWritePre <buffer> %s/\s\+$//e
+
+" Nerdtree commands
+map <C-o> :NERDTreeToggle<CR>
 
 " Git Gutter conf
 let g:gitgutter_override_sign_column_highlight = 0
