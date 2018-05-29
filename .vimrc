@@ -27,6 +27,7 @@ Plugin 'VundleVim/Vundle.vim'
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-gitgutter'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'python-mode/python-mode'
@@ -107,6 +108,11 @@ let g:pymode_rope_regenerate_on_write = 0
    " Turns off auto documentation
 let g:pymode_doc = 0
 let g:pymode_doc_bind = 'D'
+let g:pymode_lint_on_fly = 0
+let g:pymode_lint_message = 1
+
+" YouCompleteMe Conf
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 " Turn off column ruler
 let g:pymode_options_colorcolumn = 0
@@ -146,13 +152,13 @@ endif
 au BufEnter *.ml setf ocaml
 au BufEnter *.mli setf ocaml
 au BufEnter *.mll setf ocaml
-au FileType ocaml call FT_ocaml()
-function FT_ocaml()
-    set textwidth=80
-    set shiftwidth=2
-    set tabstop=2
-    " ocp-indent with ocp-indent-vim
-    autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
-    filetype indent on
-    filetype plugin indent on
-endfunction
+"au FileType ocaml call FT_ocaml()
+"function FT_ocaml()
+    "set textwidth=80
+    "set shiftwidth=2
+    "set tabstop=2
+    "" ocp-indent with ocp-indent-vim
+    "autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
+    "filetype indent on
+    "filetype plugin indent on
+"endfunction
