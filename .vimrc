@@ -33,6 +33,12 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'python-mode/python-mode'
 Plugin 'w0rp/ale'
 Plugin 'simnalamburt/vim-mundo'
+" Snippet plugins
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+" For better delimiters
+Plugin 'raimondi/delimitmate'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -55,7 +61,7 @@ map <Space> :noh<cr>
 map j gj
 map k gk
 " Vim undo
-nnoremap <C-h> :MundoToggle<CR>
+nnoremap <C-u> :MundoToggle<CR>
 
 " appearance
 syn on se title
@@ -108,11 +114,18 @@ let g:pymode_rope_regenerate_on_write = 0
    " Turns off auto documentation
 let g:pymode_doc = 0
 let g:pymode_doc_bind = 'D'
-let g:pymode_lint_on_fly = 0
+let g:pymode_lint_on_fly = 1
 let g:pymode_lint_message = 1
+let g:pymode_lint_cwindow = 0
+let g:pymode_run_bind = '<leader>q'
+autocmd FileType python map <buffer> <Leader>r :!python3 %<Enter>
 
 " YouCompleteMe Conf
 let g:ycm_autoclose_preview_window_after_completion = 1
+
+" Utilisnips conf
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<C-a>"
 
 " Turn off column ruler
 let g:pymode_options_colorcolumn = 0
