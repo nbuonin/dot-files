@@ -28,18 +28,25 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-gitgutter'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'python-mode/python-mode'
 Plugin 'w0rp/ale'
 Plugin 'simnalamburt/vim-mundo'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'svermeulen/vim-easyclip'
 " Snippet plugins
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+Plugin 'mattn/emmet-vim'
 " For better delimiters
 Plugin 'raimondi/delimitmate'
+" Javascript, React
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -62,6 +69,24 @@ filetype plugin on
 map <Space> :noh<cr>
 map j gj
 map k gk
+nnoremap <leader>d "_d
+xnoremap <leader>d "_d
+xnoremap <leader>p "_dP"
+
+" Vim Easy clip
+" remap the set mark key
+nnoremap gm m
+" Insert mode paste
+imap <c-v> <plug>EasyClipInsertModePaste
+" Command mode paste
+cmap <c-v> <plug>EasyClipCommandModePaste
+" Share yanks among instances of vim
+let g:EasyClipShareYanks = 1
+" use EasyClip substitution defaults
+let g:EasyClipUseSubstituteDefaults = 1
+" use system clipboard
+"set clipboard=unnamed
+
 " Vim undo
 nnoremap <C-u> :MundoToggle<CR>
 

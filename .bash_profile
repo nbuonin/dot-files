@@ -1,3 +1,7 @@
+# Use vi editing mode
+set -o vi
+bind -m vi-insert "\C-l":clear-screen
+
 #export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 #export PATH="~/Library/Python/3.6/bin:$PATH"
 export PIPENV_VENV_IN_PROJECT=true
@@ -36,6 +40,8 @@ alias cpr="cp -r"
 alias rmr="rm -rf"
 alias o="open"
 alias e="vim"
+alias mt="make test"
+alias mr="make runserver"
 alias eb="vim ~/dot-files/.bash_profile"
 alias eg="vim ~/dot-files/.gitconfig"
 alias ev="vim ~/dot-files/.vimrc"
@@ -90,6 +96,20 @@ function wit {
             sleep 2;
         fi;
     done;
+}
+
+function rdb {
+    if [ ! $2 ];
+    then
+        echo "rdb: rebuilds Postgres Database"
+        echo "Usage: rdb <database name> <database file to import>"
+        return 0;
+    fi;
+    dropdb $1 && createdb $1 && psql $1 < $2 
+}
+
+function runserver {
+    python3 -m http.server
 }
 
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
