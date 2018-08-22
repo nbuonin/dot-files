@@ -47,6 +47,7 @@ alias eg="vim ~/dot-files/.gitconfig"
 alias ev="vim ~/dot-files/.vimrc"
 alias sb="source ~/.bash_profile && echo 'Bash Profile Sourced'"
 alias batt="pmset -g batt"
+alias dnscc="dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 ## see .gitconfig for alias
 alias gpo="git po"
 ## spider site with wget to check for broken links
