@@ -121,3 +121,9 @@ if [ $(rbenv > /dev/null 2>&1) ]; then eval "$(rbenv init -)"; fi
 # OPAM configuration
 . /Users/nickb/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 eval $(opam config env)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '~/Downloads/google-cloud-sdk/path.bash.inc' ]; then source '~/Downloads/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '~/Downloads/google-cloud-sdk/completion.bash.inc' ]; then source '~/Downloads/google-cloud-sdk/completion.bash.inc'; fi

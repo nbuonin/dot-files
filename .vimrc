@@ -107,6 +107,9 @@ set ts=4
 set sw=4
 set softtabstop=4
 
+" some sensible defaults for YAML
+autocmd FileType yaml setlocal ts=2 sw=2
+
 " search
 set hls
 set incsearch
