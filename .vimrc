@@ -186,6 +186,10 @@ augroup END
 " Spell checking
 set spelllang=en
 
+" Tab blocks of text
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+
 "Merlin: tooling for OCaml
 filetype plugin indent on
 syntax enable

@@ -87,7 +87,7 @@ function wit {
         TEMP_TIME=$(stat -f %c $1);
         if [ "M_TIME" != "$TEMP_TIME" ];
         then
-            exec $2
+            $($2)
             M_TIME=$TEMP_TIME;
         fi;
         if [ $3 ]
