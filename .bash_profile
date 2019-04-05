@@ -113,6 +113,19 @@ function runserver {
     python3 -m http.server
 }
 
+function pull-package {
+    sed -i.bak "/$1.*/d" requirements.txt
+    rm requirements.txt.bak
+    make test
+    if [ $? -eq 0 ];
+    then
+        git checkout -b remove-$1
+        git add requirements.txt
+        git commit -m "remove $1"
+        git po
+    fi;
+}
+
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
 # Homebrew, and follow rbenv instructions, per this SO: 
 # https://stackoverflow.com/questions/36485180/how-to-update-ruby-with-homebrew
