@@ -48,6 +48,9 @@ Plugin 'raimondi/delimitmate'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 
+" LaTex
+Plugin 'lervag/vimtex'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -220,3 +223,13 @@ au BufEnter *.mll setf ocaml
     "filetype indent on
     "filetype plugin indent on
 "endfunction
+
+" LaTex Config
+let g:polyglot_disabled = ['latex']
+let g:tex_flavor = 'latex'
+if !exists('g:ycm_semantic_triggers')
+    let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+" First use brew to install Skim
+let g:vimtex_view_method =  'skim'
