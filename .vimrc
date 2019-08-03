@@ -42,7 +42,7 @@ Plugin 'svermeulen/vim-easyclip'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'mattn/emmet-vim'
-" For better delimiters
+"" For better delimiters
 Plugin 'raimondi/delimitmate'
 " Javascript, React
 Plugin 'pangloss/vim-javascript'
@@ -146,14 +146,33 @@ set foldlevel=99
 
 " Pymode conf
 let g:pymode_python = 'python3'
-let g:pymode_rope_regenerate_on_write = 0
    " Turns off auto documentation
 let g:pymode_doc = 0
 let g:pymode_doc_bind = 'D'
 let g:pymode_lint_on_fly = 1
 let g:pymode_lint_message = 1
 let g:pymode_lint_cwindow = 0
-let g:pymode_run_bind = '<leader>q'
+let g:pymode_run_bind = '<leader>r'
+let g:pymode_breakpoint = 1
+let g:pymode_breakpoint_bind = '<leader>b'
+let g:pymode_virtualenv = 1
+" Pymode Rope
+let g:pymode_rope = 1
+let g:pymode_rope_regenerate_on_write = 1
+let g:pymode_rope_show_doc_bind = '<leader>d'
+let g:pymode_rope_goto_definition_cmd = 'new'
+let g:pymode_rope_goto_definition_bind = '<leader>f'
+py3 << EOF
+import os
+import sys
+while not os.getcwd() == os.environ['HOME']:
+    if '.venv' in os.listdir():
+        activate = os.path.join(os.getcwd(), '.venv/bin/activate_this.py')
+        exec(open(activate).read(), {'__file__': activate})
+        break
+    else:
+        os.chdir('..')
+EOF
 autocmd FileType python map <buffer> <Leader>r :!python3 %<Enter>
 
 " YouCompleteMe Conf
