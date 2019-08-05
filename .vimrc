@@ -1,6 +1,20 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" This walks up the file tree until it finds a virtualenv to activate
+" You should scope this for only python files
+py3 << EOF
+import os
+import sys
+while not os.getcwd() == os.environ['HOME']:
+   if '.venv' in os.listdir():
+       activate = os.path.join(os.getcwd(), '.venv/bin/activate_this.py')
+       exec(open(activate).read(), {'__file__': activate})
+       break
+   else:
+       os.chdir('..')
+EOF
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -31,8 +45,8 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'python-mode/python-mode'
 Plugin 'w0rp/ale'
+Plugin 'sheerun/vim-polyglot'
 Plugin 'simnalamburt/vim-mundo'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
@@ -144,39 +158,17 @@ let mapleader = ","
 " no code folding on open
 set foldlevel=99
 
-" Pymode conf
-let g:pymode_python = 'python3'
-   " Turns off auto documentation
-let g:pymode_doc = 0
-let g:pymode_doc_bind = 'D'
-let g:pymode_lint_on_fly = 1
-let g:pymode_lint_message = 1
-let g:pymode_lint_cwindow = 0
-let g:pymode_run_bind = '<leader>r'
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_bind = '<leader>b'
-let g:pymode_virtualenv = 1
-" Pymode Rope
-let g:pymode_rope = 1
-let g:pymode_rope_regenerate_on_write = 1
-let g:pymode_rope_show_doc_bind = '<leader>d'
-let g:pymode_rope_goto_definition_cmd = 'new'
-let g:pymode_rope_goto_definition_bind = '<leader>f'
-py3 << EOF
-import os
-import sys
-while not os.getcwd() == os.environ['HOME']:
-    if '.venv' in os.listdir():
-        activate = os.path.join(os.getcwd(), '.venv/bin/activate_this.py')
-        exec(open(activate).read(), {'__file__': activate})
-        break
-    else:
-        os.chdir('..')
-EOF
 autocmd FileType python map <buffer> <Leader>r :!python3 %<Enter>
 
 " YouCompleteMe Conf
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_goto_buffer_command = 'split'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_add_preview_to_completeopt = 1
+nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>t :YcmCompleter GetType<CR>
+nnoremap <leader>r :YcmCompleter GoToReferences<CR>
+nnoremap <leader>d :YcmCompleter GetDoc<CR>
 
 " Utilisnips conf
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -187,8 +179,11 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
 
 " Ale config
-nmap <silent> <C-J> <Plug>(ale_next_wrap)
-nmap <silent> <C-K> <Plug>(ale_previous_wrap)
+nmap <silent> <leader>j <Plug>(ale_next_wrap)
+nmap <silent> <leader>k <Plug>(ale_previous_wrap)
+let g:ale_python_auto_pipenv = 1
+let g:ale_linters = {'python': ['flake8', 'pylint']}
+" For more configuration options check :h ale-python-options
 
 " Turn off column ruler
 let g:pymode_options_colorcolumn = 0
