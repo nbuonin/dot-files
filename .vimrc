@@ -3,16 +3,32 @@ filetype off                  " required
 
 " This walks up the file tree until it finds a virtualenv to activate
 " You should scope this for only python files
+" py3 << EOF
+" import os
+" import sys
+" while not os.getcwd() == os.environ['HOME']:
+"    if '.venv' in os.listdir():
+"        activate = os.path.join(os.getcwd(), '.venv/bin/activate_this.py')
+"        exec(open(activate).read(), {'__file__': activate})
+"        break
+"    else:
+"        os.chdir('..')
+" EOF
+
 py3 << EOF
 import os
 import sys
-while not os.getcwd() == os.environ['HOME']:
-   if '.venv' in os.listdir():
-       activate = os.path.join(os.getcwd(), '.venv/bin/activate_this.py')
-       exec(open(activate).read(), {'__file__': activate})
-       break
-   else:
-       os.chdir('..')
+path = os.getcwd()
+ve = ['.venv', 've']
+while path != os.environ['HOME']:
+    curr_dir = os.listdir(path)
+    if any(el in ve for el in curr_dir):
+        ve_root = set(ve).intersection(set(curr_dir)).pop()
+        activate = os.path.join(path, ve_root + '/bin/activate_this.py')
+        exec(open(activate).read(), {'__file__': activate})
+        break
+    else:
+        path = os.path.split(path)[0]
 EOF
 
 " set the runtime path to include Vundle and initialize
@@ -40,7 +56,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
-
+"Plugin 'plytophogy/vim-virtualenv'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdcommenter'
