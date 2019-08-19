@@ -1,31 +1,64 @@
+" My general thinking as of now is to use YCM only for completion, as it seems
+" the fastest for that. For goto definitions, getting docs, getting types, and
+" finding references I plan to use ALE. I think it makes sense for ALE to be
+" the Language Server client for my setup for now. There are other options out
+" there, and it may make sense to blow this up in the future. For example,
+" Deoplete seems to be popular for completion, as well as LanguageServer to
+" the things that ALE does.
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" This walks up the file tree until it finds a virtualenv to activate
-" You should scope this for only python files
-" py3 << EOF
-" import os
-" import sys
-" while not os.getcwd() == os.environ['HOME']:
-"    if '.venv' in os.listdir():
-"        activate = os.path.join(os.getcwd(), '.venv/bin/activate_this.py')
-"        exec(open(activate).read(), {'__file__': activate})
-"        break
-"    else:
-"        os.chdir('..')
-" EOF
-
+" Enable the virtualenv
 py3 << EOF
 import os
+import site
 import sys
 path = os.getcwd()
+# Add possible names for virtualenvs here
 ve = ['.venv', 've']
+
+
+def activate(bin_dir):
+    """Taken from pypa/virtual_env:
+    https://github.com/pypa/virtualenv/blob/master/virtualenv_embedded/activate_this.py """
+    # prepend bin to PATH (this file is inside the bin directory)
+    os.environ["PATH"] = os.pathsep.join([bin_dir] + os.environ.get("PATH", "").split(os.pathsep))
+
+    base = os.path.dirname(bin_dir)
+
+    # virtual env is right above bin directory
+    os.environ["VIRTUAL_ENV"] = base
+
+    # add the virtual environments site-package to the host python import mechanism
+    IS_PYPY = hasattr(sys, "pypy_version_info")
+    IS_JYTHON = sys.platform.startswith("java")
+    if IS_JYTHON:
+        site_packages = os.path.join(base, "Lib", "site-packages")
+    elif IS_PYPY:
+        site_packages = os.path.join(base, "site-packages")
+    else:
+        IS_WIN = sys.platform == "win32"
+        if IS_WIN:
+            site_packages = os.path.join(base, "Lib", "site-packages")
+        else:
+            site_packages = os.path.join(base, "lib", "python{}.{}".format(*sys.version_info), "site-packages")
+
+    prev = set(sys.path)
+    site.addsitedir(site_packages)
+    sys.real_prefix = sys.prefix
+    sys.prefix = base
+
+    # Move the added items to the front of the path, in place
+    new = list(sys.path)
+    sys.path[:] = [i for i in new if i not in prev] + [i for i in new if i in prev]
+
+
 while path != os.environ['HOME']:
     curr_dir = os.listdir(path)
     if any(el in ve for el in curr_dir):
         ve_root = set(ve).intersection(set(curr_dir)).pop()
-        activate = os.path.join(path, ve_root + '/bin/activate_this.py')
-        exec(open(activate).read(), {'__file__': activate})
+        bin_root = os.path.join(path, ve_root + '/bin')
+        activate(bin_root)
         break
     else:
         path = os.path.split(path)[0]
@@ -56,7 +89,6 @@ Plugin 'VundleVim/Vundle.vim'
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
-"Plugin 'plytophogy/vim-virtualenv'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdcommenter'
@@ -74,6 +106,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'mattn/emmet-vim'
 "" For better delimiters
 Plugin 'raimondi/delimitmate'
+
 " Javascript, React
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
@@ -99,12 +132,17 @@ filetype plugin indent on
 filetype plugin on
 
 " keys
+inoremap jk <ESC>
 map <Space> :noh<cr>
 map j gj
 map k gk
 nnoremap <leader>d "_d
 xnoremap <leader>d "_d
 xnoremap <leader>p "_dP"
+
+" Mouse
+set mouse=a
+set ttymouse=xterm
 
 " Vim Easy clip
 " remap the set mark key
@@ -178,13 +216,16 @@ autocmd FileType python map <buffer> <Leader>r :!python3 %<Enter>
 
 " YouCompleteMe Conf
 let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_goto_buffer_command = 'split'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_add_preview_to_completeopt = 1
-nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>t :YcmCompleter GetType<CR>
-nnoremap <leader>r :YcmCompleter GoToReferences<CR>
-nnoremap <leader>d :YcmCompleter GetDoc<CR>
+let g:ycm_language_server = [ {
+    \ 'name': 'haskell',
+    \ 'filetypes': [ 'haskell' ],
+    \ 'cmdline': [ 'hie-wrapper' ],
+    \ } ]
+" To disable YCM
+"let g:ycm_filetype_blacklist = { '*': 1 }
+
 
 " Utilisnips conf
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -195,14 +236,40 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
 
 " Ale config
+" Jump to errors
 nmap <silent> <leader>j <Plug>(ale_next_wrap)
 nmap <silent> <leader>k <Plug>(ale_previous_wrap)
+" Underline errors
+hi Error term=underline cterm=underline ctermfg=Red gui=undercurl guisp=Red
+hi link ALEError Error
+hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
+hi link ALEWarning Warning
+hi link ALEInfo SpellCap
+" Python linters
 let g:ale_python_auto_pipenv = 1
-let g:ale_linters = {'python': ['flake8', 'pylint']}
+let g:ale_linters = {'python': ['pyls', 'flake8', 'pylint']}
 " For more configuration options check :h ale-python-options
-
-" Turn off column ruler
-let g:pymode_options_colorcolumn = 0
+" Use the quickfix list
+" let g:ale_set_loclist = 0
+" let g:ale_set_quickfix = 1
+" let g:ale_open_list = 1
+let g:ale_completion_enabled = 0
+let g:ale_set_balloons = 1
+" GoTo definition
+nnoremap <leader>g :ALEGoToDefinitionInSplit<CR>
+nnoremap <leader>G :ALEGoToDefinitionInTab<CR>
+" Get type
+nnoremap <leader>t :ALEGoToTypeDefinitionInSplit<CR>
+nnoremap <leader>T :ALEGoToTypeDefinitionInTab<CR>
+" Find references
+nnoremap <leader>r :ALEFindReferences<CR> 
+" Get available documentation
+nnoremap <leader>d :ALEHover<CR>
+autocmd InsertEnter * if pumvisible() == 0 | pclose | endi
+" Use :au ALEEvent to see possible events for ALE
+" Taken from here:
+" https://vi.stackexchange.com/questions/4056/is-there-an-easy-way-to-close-a-scratch-buffer-preview-window
+"autocmd CursorMoved * if pumvisible() == 0 | pclose | endi
 
 " Better col ruler, only highlight the 79th char
 augroup collumnLimit
@@ -223,7 +290,7 @@ set spelllang=en
 vmap <Tab> >gv
 vmap <S-Tab> <gv
 
-"Merlin: tooling for OCaml
+" Merlin: tooling for OCaml
 filetype plugin indent on
 syntax enable
 
