@@ -246,7 +246,7 @@ hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gol
 hi link ALEWarning Warning
 hi link ALEInfo SpellCap
 " Python linters
-let g:ale_python_auto_pipenv = 1
+"let g:ale_python_auto_pipenv = 1
 let g:ale_linters = {'python': ['pyls', 'flake8', 'pylint']}
 " For more configuration options check :h ale-python-options
 " Use the quickfix list
