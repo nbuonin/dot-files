@@ -9,6 +9,10 @@ export PIPENV_VENV_IN_PROJECT=true
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/python@2/libexec/bin:/usr/local/opt/python@2/bin:$PATH"
 
+# Haskell
+export PATH=$PATH:~/.local/bin
+export PATH=$(stack path --compiler-bin):$PATH
+
 # Go
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export GOPATH=$(go env GOPATH)
