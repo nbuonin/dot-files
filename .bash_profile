@@ -57,7 +57,14 @@ alias dnscc="dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias gpo="git po"
 ## spider site with wget to check for broken links
 function link-check {
-    wget --spider -r -nd -nv -l ${2-3} --waitretry ${3-2} -o run1.log $1 && echo "view run1.log to see output"
+    if [ ! $1 ]; then
+        echo "Usage: link-check <hostname> <level of links to follow> <timeout seconds>"
+        echo "Default level: 3, Default timeout: 2s"
+        return 0;
+    fi
+    wget --spider -r -nd -nv -l ${2-3} --waitretry ${3-2} -o run1.log $1
+    echo "view run1.log to see output"
+    less run1.log
 }
 
 # This opens a "guide" file that you've written. They are a way to keep technical notes.
@@ -129,6 +136,17 @@ function pull-package {
         git commit -m "remove $1"
         git po
     fi;
+}
+
+function gifit {
+    if [ ! $2 ];
+    then
+        echo "gifit: Turns a video into a gif using ffmpeg"
+        echo "Usage: gifit <input movie> <gif file name, leave off extention>"
+        return 0;
+    fi;
+    # Based on: https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
+    ffmpeg -i $1 -vf "fps=15,scale=1280:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 $2.gif
 }
 
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
