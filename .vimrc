@@ -114,6 +114,12 @@ Plugin 'mxw/vim-jsx'
 " LaTex
 Plugin 'lervag/vimtex'
 
+" Bucklescript
+Plugin 'reasonml-editor/vim-reason-plus'
+
+" Rust
+Plugin 'rust-lang/rust.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -215,6 +221,7 @@ set foldlevel=99
 autocmd FileType python map <buffer> <Leader>r :!python3 %<Enter>
 
 " YouCompleteMe Conf
+let g:ycm_show_diagnostics_ui = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_add_preview_to_completeopt = 1
@@ -247,7 +254,9 @@ hi link ALEWarning Warning
 hi link ALEInfo SpellCap
 " Python linters
 "let g:ale_python_auto_pipenv = 1
-let g:ale_linters = {'python': ['pyls', 'flake8', 'pylint']}
+let g:ale_linters = {
+\   'python': ['pyls', 'flake8', 'pylint', 'mypy']
+\}
 " For more configuration options check :h ale-python-options
 " Use the quickfix list
 " let g:ale_set_loclist = 0
@@ -265,6 +274,8 @@ nnoremap <leader>T :ALEGoToTypeDefinitionInTab<CR>
 nnoremap <leader>r :ALEFindReferences<CR> 
 " Get available documentation
 nnoremap <leader>d :ALEHover<CR>
+" See more info about error
+nnoremap <leader>? :ALEDetail<CR>
 autocmd InsertEnter * if pumvisible() == 0 | pclose | endi
 " Use :au ALEEvent to see possible events for ALE
 " Taken from here:
@@ -310,16 +321,16 @@ endif
 au BufEnter *.ml setf ocaml
 au BufEnter *.mli setf ocaml
 au BufEnter *.mll setf ocaml
-"au FileType ocaml call FT_ocaml()
-"function FT_ocaml()
-    "set textwidth=80
-    "set shiftwidth=2
-    "set tabstop=2
-    "" ocp-indent with ocp-indent-vim
-    "autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
-    "filetype indent on
-    "filetype plugin indent on
-"endfunction
+au FileType ocaml call FT_ocaml()
+function FT_ocaml()
+    set textwidth=80
+    set shiftwidth=2
+    set tabstop=2
+    " ocp-indent with ocp-indent-vim
+    autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
+    filetype indent on
+    filetype plugin indent on
+endfunction
 
 " LaTex Config
 let g:polyglot_disabled = ['latex']
