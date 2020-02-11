@@ -152,7 +152,7 @@ function gifit {
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
 # Homebrew, and follow rbenv instructions, per this SO: 
 # https://stackoverflow.com/questions/36485180/how-to-update-ruby-with-homebrew
-if [ $(rbenv > /dev/null 2>&1) ]; then eval "$(rbenv init -)"; fi
+if [ $(which rbenv) ]; then eval "$(rbenv init -)"; fi
 
 # OPAM configuration
 . /Users/nickb/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
