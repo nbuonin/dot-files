@@ -174,7 +174,9 @@ set ruler
 set number
 set laststatus=2
 set background=dark
-set t_Co=256
+" Per this SO: https://vi.stackexchange.com/questions/16108/neovim-gray-background
+au ColorScheme * hi Normal ctermbg=None
+"set t_Co=256
 
 " formatting
 set ai
