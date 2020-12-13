@@ -2,6 +2,8 @@
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
+export EDITOR=$(which vim)
+
 #export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 #export PATH="~/Library/Python/3.6/bin:$PATH"
 export PIPENV_VENV_IN_PROJECT=true

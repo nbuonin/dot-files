@@ -3,7 +3,6 @@
 # Please adapt and uncomment the following lines:
 	user = Nick Buonincontri
 	email = nbuonin@gmail.com
-	editor = /usr/local/bin/vim
 	excludesfile = /Users/nickb/.gitignore_global
 [user]
 	name = Nick Buonincontri
