@@ -11,6 +11,14 @@ export PIPENV_VENV_IN_PROJECT=true
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/python@2/libexec/bin:/usr/local/opt/python@2/bin:$PATH"
 
+if [ `uname` == 'Darwin' ]; then
+    if command -v pyenv 1>/dev/null 2>&1; then
+      eval "$(pyenv init -)"
+    fi
+    # Needed to get YouCompleteMe to build
+    export PYTHON_CONFIGURE_OPTS="--enable-framework"
+fi
+
 # Haskell
 export PATH=$PATH:~/.local/bin
 export PATH=$(stack path --compiler-bin):$PATH
