@@ -79,7 +79,7 @@
   :after evil
   :config
   (evil-escape-mode 1)
-  (setq-default evil-escape-key-sequence "fd")
+  (setq-default evil-escape-key-sequence "jk")
   (setq-default evil-escape-delay 0.2))
 
 (use-package evil-collection
@@ -128,8 +128,9 @@
 (use-package esh-autosuggest
   :hook (eshell-mode . esh-autosuggest-mode))
 
-(when (version<= "26.0.50" emacs-version)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+(global-linum-mode t)
+;(when (version<= "26.0.50" emacs-version)
+  ;(add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
 (use-package doom-themes
   :config
@@ -230,6 +231,10 @@
             '(:with company-yasnippet))))
 
 (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+
+
+;;; Language Server Protocol
+
 
 ;;;; Snippets
 ;; Yasnipet
