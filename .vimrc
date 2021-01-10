@@ -233,7 +233,7 @@ let g:ycm_language_server = [ {
     \ 'cmdline': [ 'hie-wrapper' ],
     \ } ]
 " To disable YCM
-"let g:ycm_filetype_blacklist = { '*': 1 }
+let g:ycm_filetype_blacklist = { '*': 1 }
 
 
 " Utilisnips conf
@@ -257,15 +257,17 @@ hi link ALEInfo SpellCap
 " Python linters
 "let g:ale_python_auto_pipenv = 1
 let g:ale_linters = {
-\   'python': ['pyls', 'flake8', 'pylint', 'mypy']
+\   'python': ['pyls', 'flake8', 'pylint', 'mypy'],
+\   'javascript': ['eslint', 'tsserver']
 \}
 " For more configuration options check :h ale-python-options
 " Use the quickfix list
-" let g:ale_set_loclist = 0
-" let g:ale_set_quickfix = 1
-" let g:ale_open_list = 1
-let g:ale_completion_enabled = 0
+ let g:ale_set_loclist = 1
+ "let g:ale_set_quickfix = 1
+ "let g:ale_open_list = 1
+let g:ale_completion_enabled = 1
 let g:ale_set_balloons = 1
+let g:ale_completion_autoimport = 1
 " GoTo definition
 nnoremap <leader>g :ALEGoToDefinitionInSplit<CR>
 nnoremap <leader>G :ALEGoToDefinitionInTab<CR>
