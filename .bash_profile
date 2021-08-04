@@ -3,6 +3,8 @@ set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
 export EDITOR=$(which vim)
+# Pyenv setup
+PATH=$(pyenv root)/shims:$PATH
 
 #export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 #export PATH="~/Library/Python/3.6/bin:$PATH"
@@ -27,8 +29,14 @@ export PATH=$(stack path --compiler-bin):$PATH
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export GOPATH=$(go env GOPATH)
 
-export CPPFLAGS="-I/usr/local/opt/openssl/include"
-export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
+
+# For zlib/Pillow
+export LDFLAGS="-L/usr/local/opt/zlib/lib $LDFLAGS"
+export CPPFLAGS="-I/usr/local/opt/zlib/include $CPPFLAGS"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh"  ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -63,6 +71,7 @@ alias ev="vim ~/dot-files/.vimrc"
 alias sb="source ~/.bash_profile && echo 'Bash Profile Sourced'"
 alias batt="pmset -g batt"
 alias dnscc="dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+alias aws-auth="aws-mfa --duration 10800"
 ## see .gitconfig for alias
 alias gpo="git po"
 ## spider site with wget to check for broken links
@@ -156,7 +165,11 @@ function gifit {
         return 0;
     fi;
     # Based on: https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
-    ffmpeg -i $1 -vf "fps=15,scale=1280:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 $2.gif
+    ffmpeg -i $1 -vf "fps=15,scale=960:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 $2.gif
+}
+
+function rc {
+    rustc $1.rs && ./$1 && rm $1
 }
 
 # Sets up Ruby so I'm not clobbering the system Ruby. First install rbenv with
@@ -173,3 +186,15 @@ if [ -f '~/Downloads/google-cloud-sdk/path.bash.inc' ]; then source '~/Downloads
 
 # The next line enables shell command completion for gcloud.
 if [ -f '~/Downloads/google-cloud-sdk/completion.bash.inc' ]; then source '~/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+
+# Fix clang
+#export PATH="/usr/local/opt/llvm/bin:$PATH"
+#export CC=clang
+#export CXX=$(CC)++
+
+#LDFLAGS += -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib
+#CPPFLAGS += -I/usr/local/opt/llvm/include -I/usr/local/opt/llvm/include/c++/v1/
+
+
+
+export PATH="$HOME/.cargo/bin:$PATH"

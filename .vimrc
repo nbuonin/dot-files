@@ -285,6 +285,8 @@ autocmd InsertEnter * if pumvisible() == 0 | pclose | endi
 " Taken from here:
 " https://vi.stackexchange.com/questions/4056/is-there-an-easy-way-to-close-a-scratch-buffer-preview-window
 "autocmd CursorMoved * if pumvisible() == 0 | pclose | endi
+"Fixes bug that causes autoselection of first autocomplete item
+set completeopt=menu,menuone,preview,noselect,noinsert
 
 " Better col ruler, only highlight the 79th char
 augroup collumnLimit
@@ -308,6 +310,10 @@ vmap <S-Tab> <gv
 " Merlin: tooling for OCaml
 filetype plugin indent on
 syntax enable
+augroup overrideftplugins
+    au!
+    au FileType * set cinkeys= indentkeys=
+augroup END
 
 " Vim needs to be built with Python scripting support, and must be
 " able to find Merlin's executable on PATH.
